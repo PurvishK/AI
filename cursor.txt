@@ -1,0 +1,31 @@
+set serveroutput on 
+declare 
+cursor stu is select regno,dbms,ethics,dpsd from student; 
+rno student.regno%type; 
+m1 student.dbms%type; 
+m2 student.ethics%type; 
+m3 student.dpsd%type; 
+tot student.total%type; 
+av student.average%type; 
+begin 
+open stu; 
+if stu%ISOPEN then 
+dbms_output.put_line(‘Cursor Opened…’); 
+loop 
+fetch stu into rno,m1,m2,m3; 
+exit when stu%NOTFOUND; 
+tot:=(m1+m2+m3); 
+av:=tot/3; 
+update student set average=av where regno=rno; 
+update student set total=tot where regno=rno; 
+end loop; 
+dbms_output.put_line(‘Total Records :’ stu%ROWCOUNT); 
+close stu; 
+dbms_output.put_line(‘Cursor Closed…’); 
+end; 
+/ 
+
+
+Cursor Opened… 
+Total Records : 5 
+Cursor Closed… 

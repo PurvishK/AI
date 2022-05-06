@@ -1,0 +1,28 @@
+create procedure proc(or_no in number,b in out number) is
+qtyord number;
+qtydel number;
+code number;
+begin
+select qty_ord,qty_del,itemcode into qtyord,qtydel,code from order_master where
+ordno=or_no;
+if qtydel<qtyord then
+b:=code;
+end if;
+end;
+/
+
+
+declare
+a number;
+b number;
+begin
+a:=&enter_ordno;
+proc(a,b);
+if b>0 then
+dbms_output.put_line('The item code '||to_char(b)||' has to be delivered');
+else
+dbms_output.put_line('The item has been delivered');
+end if;
+end;
+/
+

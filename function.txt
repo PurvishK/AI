@@ -1,0 +1,30 @@
+create function items(it number)return number is args number;
+qtyord number;
+qtydel number;
+begin
+select qty_ord,qty_del into qtyord,qtydel from order_master where ordno=it;
+if qtydel<qtyord then
+args:=0;
+return args;
+else
+args:=1;
+return args;
+end if;
+end;
+/
+
+
+
+declare
+a number;
+b number;
+begin
+a:=&enter_ordno;
+b:=items(a);
+b=0 then
+dbms_output.put_line('The item has to be delivered.');
+else
+dbms_output.put_line('The item has been delivered.');
+end if;
+end;
+/
